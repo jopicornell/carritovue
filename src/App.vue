@@ -10,7 +10,7 @@
           <ul>
             <li class="submenu">
               <img src="img/cart.png" id="img-carrito">
-              <ShoppingCart :list="this.Cart" @eliminarCurso="eliminarCurso" @vaciarCarrito="vaciarCarrito"/>
+              <ShoppingCart :list="this.cursosCarrito" @eliminarCurso="eliminarCurso" @vaciarCarrito="vaciarCarrito"/>
             </li>
           </ul>
         </div>
@@ -58,7 +58,9 @@ export default {
         {id: 5, titulo: 'PHP: Laravel', nombre: 'Carolina Bermudez', image: 'img/curso5.jpg', precio: 30, cantidad: 1},
         {id: 6, titulo: 'JAVA', nombre: 'Ignacio Huerta', image: 'img/curso1.jpg', precio: 15, cantidad: 1}
       ],
-      Cart: []
+      cursosCarrito: [],
+      cursoSeleccionado:'',
+      cursoSimilar: '',
     }
   },
   components: {
@@ -70,28 +72,35 @@ export default {
   },
   methods: {
     vaciarCarrito: function () {
-      this.Cart = [];
+      this.cursosCarrito = [];
     },
-    agregarCurso: function (event, index, course) {
-      if (this.Cart.some(item => item.id === this.datos[index].id)) {
-        this.Cart[index].cantidad++
-        this.Cart[index].precio++
+    agregarCurso: function (event, index, cursosInfo) {
+
+      this.cursoSeleccionado = this.cursosCarrito[index];
+      this.cursoSimilar = this.cursosCarrito.some(item => item.id === this.datos[index].id);
+
+      if (this.cursoSimilar) {
+        // console.log(this.cursosCarrito);
+        // console.log(index);
+        console.log(this.cursosCarrito[0].precio);
+        // this.cursosCarrito[index].cantidad++
+
       } else {
-        this.Cart.push(course)
+        this.cursosCarrito.push(cursosInfo)
       }
     },
-    // eliminarCurso: function (event, index) {
-    //   let existe = this.Cart.some(curso => curso.id === this.Cart[index].id)
-    //   if (existe) {
-    //     if(this.Cart[index].cantidad > 1) {
-    //       this.Cart[index].cantidad--
-    //     } else {
-    //       this.Cart.splice(index,1)
-    //     }
-    //   } else {
-    //     this.Cart.splice(index,1)
-    //   }
-    //  }
+    eliminarCurso: function (event, index) {
+
+      if (this.cursoSimilar) {
+        if(this.cursoSeleccionado.cantidad > 1) {
+          this.cursoSeleccionado.cantidad--
+        } else {
+          this.cursosCarrito.splice(index,1)
+        }
+      } else {
+        this.cursosCarrito.splice(index,1)
+      }
+     }
   }
 }
 
