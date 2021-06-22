@@ -75,25 +75,25 @@ export default {
       this.cursosCarrito = [];
     },
     agregarCurso: function (event, index, cursosInfo) {
-
-      this.cursoSeleccionado = this.cursosCarrito[index];
-      this.cursoSimilar = this.cursosCarrito.some(item => item.id === this.datos[index].id);
-
+      this.cursoSimilar = this.cursosCarrito.some(curso => curso.id === this.datos[index].id);
       if (this.cursoSimilar) {
-        // console.log(this.cursosCarrito);
-        // console.log(index);
-        console.log(this.cursosCarrito[0].precio);
-        // this.cursosCarrito[index].cantidad++
-
+        let cursos = this.cursosCarrito.map(curso => {
+          if(curso.id === this.datos[index].id) {
+             curso.cantidad++
+          } else {
+            return curso
+          }
+          return curso
+        })
+        this.cursosCarrito = [...cursos]
       } else {
         this.cursosCarrito.push(cursosInfo)
       }
     },
     eliminarCurso: function (event, index) {
-
       if (this.cursoSimilar) {
-        if(this.cursoSeleccionado.cantidad > 1) {
-          this.cursoSeleccionado.cantidad--
+        if(this.cursosCarrito[index].cantidad > 1) {
+          this.cursosCarrito[index].cantidad--
         } else {
           this.cursosCarrito.splice(index,1)
         }
