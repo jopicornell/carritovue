@@ -1,7 +1,7 @@
 <template>
 <div class="row">
             <div class="four columns" v-for="(course, index) in CourseList" :key="index">
-                <div class="card" id="{{course.id}}" data-cantidad="{{course.cantidad}}">
+                <div class="card" id="{{course.id}}">
                     <img :src="course.image" class="imagen-curso u-full-width">
                     <div class="info-card">
                         <h4>{{course.titulo}}</h4>

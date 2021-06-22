@@ -17,10 +17,10 @@
                                                 <td>{{items.titulo}}</td>
                                                 <td>{{items.nombre}}</td>
                                                 <td> <img :src="items.image" alt="producto"></td>
-                                                <td>{{items.precio * items.cantidad}}</td>
+                                                <td>{{items.precio}}</td>
                                                 <td>{{items.id}}</td>
                                                 <td>{{index}}</td>
-                                                <td> <a href="#" @click="$emit('eliminarCurso', $event, index)"> X </a> </td>
+                                                <td> <a href="#" @click="$emit('eliminarCurso', $event, index, list)"> X </a> </td>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
