@@ -46,7 +46,7 @@ export default {
       datos: [
         {
           id: 1,
-          titulo: 'HTML5, CSS3, JavaScript para Principiantes',
+          titulo: 'HTML5, CSS3, JavaScript',
           nombre: 'Juan Pedro',
           image: 'img/curso1.jpg',
           precio: 240,
@@ -54,13 +54,12 @@ export default {
         },
         {id: 2, titulo: 'JavaScript', nombre: 'Maria casas', image: 'img/curso2.jpg', precio: 40, cantidad: 1},
         {id: 3, titulo: 'Typscript', nombre: 'Daniel Martinez', image: 'img/curso3.jpg', precio: 120, cantidad: 1},
-        {id: 4, titulo: 'Sass course', nombre: 'Javier Pietro', image: 'img/curso4.jpg', precio: 80, cantidad: 1},
-        {id: 5, titulo: 'PHP: Laravel', nombre: 'Carolina Bermudez', image: 'img/curso5.jpg', precio: 30, cantidad: 1},
-        {id: 6, titulo: 'JAVA', nombre: 'Ignacio Huerta', image: 'img/curso1.jpg', precio: 15, cantidad: 1}
       ],
       cursosCarrito: [],
       cursoSeleccionado:'',
       cursoSimilar: '',
+      nuevoPrecio:'',
+      sumax:''
     }
   },
   components: {
@@ -75,11 +74,25 @@ export default {
       this.cursosCarrito = [];
     },
     agregarCurso: function (event, index, cursosInfo) {
+       let nuevoPrecio;
+
+      this.datos.forEach(precio => {
+        if(precio.id === cursosInfo.id) {
+          nuevoPrecio = precio.precio
+          console.log(nuevoPrecio);
+        }
+      });
+
       this.cursoSimilar = this.cursosCarrito.some(curso => curso.id === this.datos[index].id);
       if (this.cursoSimilar) {
+
         let cursos = this.cursosCarrito.map(curso => {
           if(curso.id === this.datos[index].id) {
              curso.cantidad++
+             curso.precio = curso.cantidad * nuevoPrecio
+              //40                 //1          //40
+              //40                 //2          //80
+              //80                 //3          //240
           } else {
             return curso
           }
