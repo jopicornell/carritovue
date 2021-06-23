@@ -1,14 +1,14 @@
 <template>
 <div class="row">
-            <div class="four columns" v-for="(course, index) in CourseList" :key="index">
-                <div class="card" id="{{course.id}}">
-                    <img :src="course.image" class="imagen-curso u-full-width">
+            <div class="four columns" v-for="(curso, index) in CursoInfo" :key="index">
+                <div class="card" id="{{curso.id}}">
+                    <img :src="curso.image" class="imagen-curso u-full-width">
                     <div class="info-card">
-                        <h4>{{course.titulo}}</h4>
-                        <p>{{course.nombre}}</p>
+                        <h4>{{curso.titulo}}</h4>
+                        <p>{{curso.nombre}}</p>
                         <img src="img/estrellas.png">
-                        <p class="precio">{{course.precio}} <span class="u-pull-right ">$15</span></p>
-                        <a href="" class="u-full-width button-primary button input agregar-carrito" @click="$emit('agregarCurso', $event, index, course)">Agregar Al Carrito</a>
+                        <p class="precio">{{curso.precio}} <span class="u-pull-right ">$15</span></p>
+                        <a href="" class="u-full-width button-primary button input agregar-carrito" @click="$emit('agregarCurso', $event, index, curso)">Agregar Al Carrito</a>
                     </div>
                 </div> <!--.card-->
             </div>
@@ -19,7 +19,7 @@
 export default {
     name: 'CardCourse',
     props: {
-        CourseList: Array,
+        CursoInfo: Array,
     }
 }
 </script>
