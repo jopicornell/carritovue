@@ -9,9 +9,9 @@
           <img src="img/estrellas.png">
           <p class="precio">{{ curso.precio }} <span class="u-pull-right ">$15</span></p>
           <a href="" class="u-full-width button-primary button input agregar-carrito"
-             @click="$emit('agregarCurso', $event, index, curso)">Agregar Al Carrito</a>
+             @click.prevent="$emit('agregarCurso', index, curso)">Agregar Al Carrito</a>
         </div>
-      </div> <!--.card-->
+      </div>
     </div>
   </div>
 </template>

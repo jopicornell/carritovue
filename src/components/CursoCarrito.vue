@@ -20,12 +20,12 @@
         <td>{{ items.precio }}</td>
         <td>{{ items.id }}</td>
         <td>{{ index }}</td>
-        <td><a href="#" @click="$emit('eliminarCurso', $event , index)"> X </a></td>
+        <td><a href="#" @click="$emit('eliminarCurso', index)"> X </a></td>
       </tr>
       </thead>
       <tbody></tbody>
     </table>
-    <a href="#" id="vaciar-carrito" class="button u-full-width" @click="$emit('vaciarCarrito', $event)">Vaciar
+    <a href="#" id="vaciar-carrito" class="button u-full-width" @click="$emit('vaciarCarrito')">Vaciar
       Carrito</a>
   </div>
 
