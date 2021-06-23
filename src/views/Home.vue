@@ -9,7 +9,7 @@
           <ul>
             <li class="submenu">
               <img src="img/cart.png" id="img-carrito">
-              <CursoCarrito :list="this.cursosCarrito" @eliminarCurso="eliminarCurso" @vaciarCarrito="vaciarCarrito" />
+              <CursoCarrito :list="this.cursosCarrito" @eliminarCurso="eliminarCurso" @vaciarCarrito="vaciarCarrito"/>
             </li>
           </ul>
         </div>
@@ -17,15 +17,15 @@
     </div>
   </header>
 
-  <CursoHero />
-  <CursoAcercade />
+  <CursoHero/>
+  <CursoAcercade/>
 
   <div id="lista-cursos" class="container">
     <h1 id="encabezado" class="encabezado">Cursos En Línea </h1>
-    <CursoTarjeta :CursoInfo="this.CursosInfo" @agregarCurso.prevent="agregarCurso" />
+    <CursoTarjeta :CursoInfo="this.CursosInfo" @agregarCurso.prevent="agregarCurso"/>
   </div>
 
-  <CursoFooter />
+  <CursoFooter/>
 
 </template>
 
@@ -54,7 +54,7 @@ export default {
         {id: 3, titulo: 'Typscript', nombre: 'Daniel Martinez', image: 'img/curso3.jpg', precio: 120, cantidad: 1},
       ],
       cursosCarrito: [],
-      cursoSeleccionado:'',
+      cursoSeleccionado: '',
       cursoSimilar: '',
     }
   },
@@ -75,7 +75,7 @@ export default {
       if (this.cursoSimilar) {
 
         let cursos = this.cursosCarrito.map(curso => {
-          if(curso.id === this.CursosInfo[index].id) {
+          if (curso.id === this.CursosInfo[index].id) {
             curso.cantidad++
           } else {
             return curso
@@ -89,13 +89,13 @@ export default {
     },
     eliminarCurso: function (event, index) {
       if (this.cursoSimilar) {
-        if(this.cursosCarrito[index].cantidad > 1) {
+        if (this.cursosCarrito[index].cantidad > 1) {
           this.cursosCarrito[index].cantidad--
         } else {
-          this.cursosCarrito.splice(index,1)
+          this.cursosCarrito.splice(index, 1)
         }
       } else {
-        this.cursosCarrito.splice(index,1)
+        this.cursosCarrito.splice(index, 1)
       }
     }
   }
