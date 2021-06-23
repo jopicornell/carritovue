@@ -14,10 +14,11 @@
             </div>
 </div>
 </template>
+
 <script>
 
 export default {
-    name: 'CardCourse',
+    name: 'CursoTarjeta',
     props: {
         CursoInfo: Array,
     }

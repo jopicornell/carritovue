@@ -9,7 +9,7 @@
           <ul>
             <li class="submenu">
               <img src="img/cart.png" id="img-carrito">
-              <ShoppingCart :list="this.cursosCarrito" @eliminarCurso="eliminarCurso" @vaciarCarrito="vaciarCarrito"/>
+              <CursoCarrito :list="this.cursosCarrito" @eliminarCurso="eliminarCurso" @vaciarCarrito="vaciarCarrito" />
             </li>
           </ul>
         </div>
@@ -17,26 +17,26 @@
     </div>
   </header>
 
-  <PageHero/>
-  <SectionAbout/>
+  <CursoHero />
+  <CursoAcercade />
 
   <div id="lista-cursos" class="container">
     <h1 id="encabezado" class="encabezado">Cursos En Línea </h1>
-    <CardCourse :CursoInfo="this.CursosInfo" @agregarCurso.prevent="agregarCurso"/>
+    <CursoTarjeta :CursoInfo="this.CursosInfo" @agregarCurso.prevent="agregarCurso" />
   </div>
 
-  <Footer/>
+  <CursoFooter />
 
 </template>
 
 
 <script>
 // @ is an alias to /src
-import ShoppingCart from '@/components/ShoppingCart.vue'
-import SectionAbout from '@/components/SectionAbout.vue'
-import PageHero from '@/components/PageHero.vue'
-import CardCourse from '@/components/CardCourse.vue'
-import Footer from '@/components/Footer.vue'
+import CursoCarrito from "@/components/CursoCarrito";
+import CursoTarjeta from "@/components/CursoTarjeta";
+import CursoHero from "@/components/CursoHero";
+import CursoAcercade from "@/components/CursoAcercade";
+import CursoFooter from "@/components/CursoFooter";
 
 export default {
   data() {
@@ -59,11 +59,11 @@ export default {
     }
   },
   components: {
-    ShoppingCart,
-    PageHero,
-    SectionAbout,
-    CardCourse,
-    Footer
+    CursoFooter,
+    CursoAcercade,
+    CursoHero,
+    CursoCarrito,
+    CursoTarjeta,
   },
   methods: {
     vaciarCarrito: function () {

@@ -32,7 +32,7 @@
 <script>
 
 export default {
-    name: 'ShoppingCart',
+    name: 'CursoCarrito',
     props: {
         list: Array
     }

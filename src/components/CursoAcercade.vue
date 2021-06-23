@@ -22,7 +22,7 @@
 <script>
 
 export default {
-    name:'Aboutus'
+    name:'CursoAcercade'
 }
 </script>
 
