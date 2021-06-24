@@ -21,7 +21,7 @@
     </div>
   </header>
 
-  <CursoHero/>
+  <CursoHero @filtrarCurso="filtrarCurso"/>
   <CursoAcercade/>
 
   <div id="lista-cursos" class="container">
@@ -75,11 +75,12 @@ export default {
     Comprobacion: function (id) {
       this.Curso_Similar = this.Cursos_Carrito.some(curso => curso.id === id);
       return this.Curso_Similar
-     },
+    },
 
     // Vaciar Carrito
     vaciarCarrito: function () {
       this.Cursos_Carrito = [];
+      this.Cursos_Cantidad = 0
     },
 
     // Agregar Curso
@@ -128,7 +129,11 @@ export default {
       }
     },
 
-  },
+    // filtra curso
+    filtrarCurso: function (palabraClave) {
+      this.Cursos_Info = this.Cursos_Info.filter(curso => curso.titulo.includes(palabraClave));
+    },
+  }
 }
 
 </script>

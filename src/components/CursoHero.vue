@@ -7,7 +7,7 @@
             <h2>Aprende algo nuevo</h2>
             <p>Todos los cursos a $15</p>
             <form action="#" id="busqueda" method="post" class="formulario">
-              <input class="u-full-width" type="text" placeholder="¿Que te gustaría Aprender?" id="buscador">
+              <input style="color:black;" class="u-full-width" type="text" placeholder="¿Que te gustaría Aprender?" id="buscador" v-model="palabraClave">
               <input type="submit" id="submit-buscador" class="submit-buscador">
             </form>
           </div>
@@ -20,6 +20,16 @@
 
 export default {
   name: 'CursoHero',
+  data () {
+    return {
+      palabraClave: ''
+    }
+  },
+  watch: {
+    palabraClave () {
+      this.$emit('filtrarCurso', this.palabraClave);
+    }
+  }
 }
 </script>
 
