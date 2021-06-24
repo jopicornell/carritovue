@@ -20,7 +20,7 @@
         <td>{{ items.precio }}</td>
         <td>{{ items.id }}</td>
         <td>{{ index }}</td>
-        <td><a href="#" @click="$emit('eliminarCurso', index)"> X </a></td>
+        <td><a href="#" @click="$emit('eliminarCurso', index, items)"> X </a></td>
       </tr>
       </thead>
       <tbody></tbody>

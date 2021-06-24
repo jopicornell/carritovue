@@ -67,6 +67,11 @@ export default {
   },
   methods: {
 
+    Comprobacion: function (valor) {
+      this.Curso_Similar = this.Cursos_Carrito.some(curso => curso.id === valor);
+      return this.Curso_Similar
+     },
+
     // Vaciar Carrito
     vaciarCarrito: function () {
       this.Cursos_Carrito = [];
@@ -74,8 +79,10 @@ export default {
 
     // Agregar Curso
     agregarCurso: function (indice, Curso_Tarjeta_datos) {
-      // Variable de comprobación
-      this.Curso_Similar = this.Cursos_Carrito.some(curso => curso.id === this.Cursos_Info[indice].id);
+
+      // funcion que comprueba si existe igualdad de ID
+      this.Comprobacion(this.Cursos_Info[indice].id)
+
       // compruebo si existe
       if (this.Curso_Similar) {
         // Si existe creo un nuevo Array y lo retorno con el precio modificado
@@ -97,7 +104,11 @@ export default {
     },
 
     //  eliminar Curso
-    eliminarCurso: function (indice) {
+    eliminarCurso: function (indice, items) {
+
+      // funcion que comprueba si existe igualdad de ID
+      this.Comprobacion(items.id)
+
       // Pregunto si existe
       if (this.Curso_Similar) {
         // Pregunto, si la cantidad es mayor a 1
