@@ -9,33 +9,29 @@
         <th>Image</th>
         <th>Precio</th>
         <th>ID</th>
-        <th>index</th>
         <th>Borrar</th>
       </tr>
-      <tr v-for="(items, index) in list" :key="index">
-        <td>{{ items.cantidad }}</td>
-        <td>{{ items.titulo }}</td>
-        <td>{{ items.nombre }}</td>
-        <td><img :src="items.image" alt="producto"></td>
-        <td>{{ items.precio }}</td>
-        <td>{{ items.id }}</td>
-        <td>{{ index }}</td>
-        <td><a href="#" @click="$emit('eliminarCurso', index, items)"> X </a></td>
-      </tr>
+
+      <CursoCarritoRow v-for="(items, index) in list" :Cursofilas="items" :Preciobase="items.cantidad" :indice="index" :key="index" v-bind="$attrs"/>
+
       </thead>
       <tbody></tbody>
     </table>
-    <a href="#" id="vaciar-carrito" class="button u-full-width" @click="$emit('vaciarCarrito')">Vaciar
-      Carrito</a>
+    <a href="#" id="vaciar-carrito" class="button u-full-width" @click="$emit('vaciarCarrito')">Vaciar Carrito</a>
   </div>
 
 </template>
 <script>
 
+import CursoCarritoRow from "./CursoCarritoRow";
+
 export default {
   name: 'CursoCarrito',
+  components: {
+    CursoCarritoRow
+  },
   props: {
-    list: Array
+    list: Array,
   }
 }
 </script>

@@ -8,7 +8,11 @@
         <div class="two columns u-pull-right">
           <ul>
             <li class="submenu">
-              <img src="img/cart.png" id="img-carrito">
+              <div style="display: flex;">
+                <img src="img/cart.png" id="img-carrito" height="25">
+                <span v-if="Curso_Cantidad !== null" class="badge">{{ Curso_Cantidad }}</span>
+              </div>
+
               <CursoCarrito :list="this.Cursos_Carrito" @eliminarCurso="eliminarCurso" @vaciarCarrito="vaciarCarrito"/>
             </li>
           </ul>
@@ -54,6 +58,7 @@ export default {
       ],
       Cursos_Carrito: [],
       Curso_Similar: '',
+      Curso_Cantidad: null
     }
   },
   components: {
@@ -67,8 +72,8 @@ export default {
   },
   methods: {
 
-    Comprobacion: function (valor) {
-      this.Curso_Similar = this.Cursos_Carrito.some(curso => curso.id === valor);
+    Comprobacion: function (indice) {
+      this.Curso_Similar = this.Cursos_Carrito.some(curso => curso.id === this.Cursos_Info[indice].id);
       return this.Curso_Similar
      },
 
@@ -79,9 +84,8 @@ export default {
 
     // Agregar Curso
     agregarCurso: function (indice, Curso_Tarjeta_datos) {
-
       // funcion que comprueba si existe igualdad de ID
-      this.Comprobacion(this.Cursos_Info[indice].id)
+      this.Comprobacion(indice)
 
       // compruebo si existe
       if (this.Curso_Similar) {
@@ -99,15 +103,16 @@ export default {
         this.Cursos_Carrito = [...cursos]
       } else {
         // Si no existe, añado el curso al carrito
+        this.Curso_Cantidad = this.Curso_Cantidad + 1
         this.Cursos_Carrito.push(Curso_Tarjeta_datos)
       }
     },
 
     //  eliminar Curso
-    eliminarCurso: function (indice, items) {
+    eliminarCurso: function (indice) {
 
       // funcion que comprueba si existe igualdad de ID
-      this.Comprobacion(items.id)
+      this.Comprobacion(indice)
 
       // Pregunto si existe
       if (this.Curso_Similar) {
@@ -205,6 +210,21 @@ ul {
   text-align: center;
   border-radius: 10px;
   color: white;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+  margin-left: 10px;
+  background-color: red;
+  padding: 5px;
+  border-radius: 50px;
+  color: white;
+  height: 12px;
+  width: 20px;
 }
 
 </style>
