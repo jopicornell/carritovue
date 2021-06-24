@@ -10,7 +10,7 @@
             <li class="submenu">
               <div style="display: flex;">
                 <img src="img/cart.png" id="img-carrito" height="25">
-                <span v-if="Curso_Cantidad !== null" class="badge">{{ Curso_Cantidad }}</span>
+                <span v-if="Cursos_Cantidad !== 0" class="badge">{{ Cursos_Cantidad }}</span>
               </div>
 
               <CursoCarrito :list="this.Cursos_Carrito" @eliminarCurso="eliminarCurso" @vaciarCarrito="vaciarCarrito"/>
@@ -57,8 +57,8 @@ export default {
         {id: 3, titulo: 'Typscript', nombre: 'Daniel Martinez', image: 'img/curso3.jpg', precio: 120, cantidad: 1},
       ],
       Cursos_Carrito: [],
+      Cursos_Cantidad: 0,
       Curso_Similar: '',
-      Curso_Cantidad: null
     }
   },
   components: {
@@ -72,8 +72,8 @@ export default {
   },
   methods: {
 
-    Comprobacion: function (indice) {
-      this.Curso_Similar = this.Cursos_Carrito.some(curso => curso.id === this.Cursos_Info[indice].id);
+    Comprobacion: function (id) {
+      this.Curso_Similar = this.Cursos_Carrito.some(curso => curso.id === id);
       return this.Curso_Similar
      },
 
@@ -85,7 +85,7 @@ export default {
     // Agregar Curso
     agregarCurso: function (indice, Curso_Tarjeta_datos) {
       // funcion que comprueba si existe igualdad de ID
-      this.Comprobacion(indice)
+      this.Comprobacion(this.Cursos_Info[indice].id)
 
       // compruebo si existe
       if (this.Curso_Similar) {
@@ -103,16 +103,16 @@ export default {
         this.Cursos_Carrito = [...cursos]
       } else {
         // Si no existe, añado el curso al carrito
-        this.Curso_Cantidad = this.Curso_Cantidad + 1
+        this.Cursos_Cantidad = this.Cursos_Cantidad + 1
         this.Cursos_Carrito.push(Curso_Tarjeta_datos)
       }
     },
 
     //  eliminar Curso
-    eliminarCurso: function (indice) {
+    eliminarCurso: function (indice, items) {
 
       // funcion que comprueba si existe igualdad de ID
-      this.Comprobacion(indice)
+      this.Comprobacion(items.id)
 
       // Pregunto si existe
       if (this.Curso_Similar) {
@@ -122,6 +122,7 @@ export default {
           this.Cursos_Carrito[indice].cantidad--
         } else {
           // Si es igual a 1, lo elimino
+          this.Cursos_Cantidad = this.Cursos_Cantidad - 1
           this.Cursos_Carrito.splice(indice, 1)
         }
       }
