@@ -21,12 +21,16 @@
     </div>
   </header>
 
-  <CursoHero @filtrarCurso="filtrarCurso"/>
+  <CursoHero v-model:title="nuevotexto"/>
+   {{nuevotexto}}
+
+  {{ filtering }}
+
   <CursoAcercade/>
 
   <div id="lista-cursos" class="container">
     <h1 id="encabezado" class="encabezado">Cursos En Línea </h1>
-    <CursoTarjeta :CursoInfo="this.Cursos_Info" @agregarCurso="agregarCurso"/>
+    <CursoTarjeta :CursoInfo="this.Cursos_Info" @agregarCurso="agregarCurso" @filtrarCurso="filtering"/>
   </div>
 
   <CursoFooter/>
@@ -59,6 +63,7 @@ export default {
       Cursos_Carrito: [],
       Cursos_Cantidad: 0,
       Curso_Similar: '',
+      nuevotexto: ''
     }
   },
   components: {
@@ -69,6 +74,15 @@ export default {
     CursoCarrito,
     CursoTarjeta,
 
+  },
+  computed: {
+    filtering() {
+        if(!this.nuevotexto) {
+          return  this.Cursos_Info.filter(curso => curso.titulo.includes(this.nuevotexto))
+        } else  {
+          return  this.nuevotexto
+        }
+    }
   },
   methods: {
 
