@@ -1,165 +1,68 @@
 <template>
-  <header id="header" class="header">
-    <div class="container">
-      <div class="row">
-        <div class="four columns">
-          <img src="img/logo.jpg" id="logo">
-        </div>
-        <div class="two columns u-pull-right">
-          <ul>
-            <li class="submenu">
-              <div style="display: flex;">
-                <img src="img/cart.png" id="img-carrito" height="25">
-                <span v-if="Cursos_Cantidad !== 0" class="badge">{{ Cursos_Cantidad }}</span>
-              </div>
+  <FindHero v-model="courseNameToSearch" />
 
-              <CursoCarrito :list="this.Cursos_Carrito" @eliminarCurso="eliminarCurso" @vaciarCarrito="vaciarCarrito"/>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </header>
+  <ExplainSection />
 
-  <CursoHero v-model:title="nuevotexto"/>
-   {{nuevotexto}}
-
-  {{ filtering }}
-
-  <CursoAcercade/>
-
-  <div id="lista-cursos" class="container">
-    <h1 id="encabezado" class="encabezado">Cursos En Línea </h1>
-    <CursoTarjeta :CursoInfo="this.Cursos_Info" @agregarCurso="agregarCurso" @filtrarCurso="filtering"/>
-  </div>
-
-  <CursoFooter/>
+  <CourseList :courses="filteredCourses" />
 </template>
 
-
 <script>
-// @ is an alias to /src
-import CursoCarrito from "@/components/CursoCarrito";
-import CursoTarjeta from "@/components/CursoTarjeta";
-import CursoHero from "@/components/CursoHero";
-import CursoAcercade from "@/components/CursoAcercade";
-import CursoFooter from "@/components/CursoFooter";
+import CourseList from '@/components/CourseList';
+import FindHero from '@/components/FindHero';
+import ExplainSection from '@/components/ExplainSection';
 
 export default {
+  components: {
+    ExplainSection,
+    FindHero,
+    CourseList,
+  },
   data() {
     return {
-      Cursos_Info: [
+      courses: [
         {
           id: 1,
-          titulo: 'HTML5, CSS3, JavaScript',
-          nombre: 'Juan Pedro',
+          title: 'HTML5, CSS3, JavaScript',
+          name: 'Juan Pedro',
           image: 'img/curso1.jpg',
-          precio: 240,
-          cantidad: 1
+          price: 240,
         },
-        {id: 2, titulo: 'JavaScript', nombre: 'Maria casas', image: 'img/curso2.jpg', precio: 40, cantidad: 1},
-        {id: 3, titulo: 'Typscript', nombre: 'Daniel Martinez', image: 'img/curso3.jpg', precio: 120, cantidad: 1},
+        {
+          id: 2,
+          title: 'JavaScript',
+          name: 'Maria casas',
+          image: 'img/curso2.jpg',
+          price: 40,
+        },
+        {
+          id: 3,
+          title: 'Typscript',
+          name: 'Daniel Martinez',
+          image: 'img/curso3.jpg',
+          price: 120,
+        },
       ],
-      Cursos_Carrito: [],
-      Cursos_Cantidad: 0,
-      Curso_Similar: '',
-      nuevotexto: ''
-    }
-  },
-  components: {
-
-    CursoFooter,
-    CursoAcercade,
-    CursoHero,
-    CursoCarrito,
-    CursoTarjeta,
-
+      courseNameToSearch: '',
+    };
   },
   computed: {
-    filtering() {
-        if(!this.nuevotexto) {
-          return  this.Cursos_Info.filter(curso => curso.titulo.includes(this.nuevotexto))
-        } else  {
-          return  this.nuevotexto
-        }
-    }
+    filteredCourses() {
+      if (this.courseNameToSearch) {
+        return this.courses.filter((curso) => curso.title.includes(this.courseNameToSearch));
+      }
+      return this.courses;
+    },
   },
-  methods: {
-
-    Comprobacion: function (id) {
-      this.Curso_Similar = this.Cursos_Carrito.some(curso => curso.id === id);
-      return this.Curso_Similar
-    },
-
-    // Vaciar Carrito
-    vaciarCarrito: function () {
-      this.Cursos_Carrito = [];
-      this.Cursos_Cantidad = 0
-    },
-
-    // Agregar Curso
-    agregarCurso: function (indice, Curso_Tarjeta_datos) {
-      // funcion que comprueba si existe igualdad de ID
-      this.Comprobacion(this.Cursos_Info[indice].id)
-
-      // compruebo si existe
-      if (this.Curso_Similar) {
-        // Si existe creo un nuevo Array y lo retorno con el precio modificado
-        let cursos = this.Cursos_Carrito.map(curso => {
-          if (curso.id === this.Cursos_Info[indice].id) {
-            curso.cantidad++
-            return curso
-          } else {
-            // Si no, retorno un array con los mismos datos
-            return curso
-          }
-        })
-        // Actualizo el carrito
-        this.Cursos_Carrito = [...cursos]
-      } else {
-        // Si no existe, añado el curso al carrito
-        this.Cursos_Cantidad = this.Cursos_Cantidad + 1
-        this.Cursos_Carrito.push(Curso_Tarjeta_datos)
-      }
-    },
-
-    //  eliminar Curso
-    eliminarCurso: function (indice, items) {
-
-      // funcion que comprueba si existe igualdad de ID
-      this.Comprobacion(items.id)
-
-      // Pregunto si existe
-      if (this.Curso_Similar) {
-        // Pregunto, si la cantidad es mayor a 1
-        if (this.Cursos_Carrito[indice].cantidad > 1) {
-          // Si es mayor a 1, le resto 1
-          this.Cursos_Carrito[indice].cantidad--
-        } else {
-          // Si es igual a 1, lo elimino
-          this.Cursos_Cantidad = this.Cursos_Cantidad - 1
-          this.Cursos_Carrito.splice(indice, 1)
-        }
-      }
-    },
-
-    // filtra curso
-    filtrarCurso: function (palabraClave) {
-      this.Cursos_Info = this.Cursos_Info.filter(curso => curso.titulo.includes(palabraClave));
-    },
-  }
-}
-
+};
 </script>
 
 <style>
-
 html {
   font-size: 62.5%;
 }
 
 body {
-  background-color: #f5f3f3
+  background-color: #f5f3f3;
 }
 
 h1 {
@@ -175,76 +78,14 @@ h4 {
   font-weight: 700;
 }
 
-header {
-  padding: 20px 0 0 0;
-  background: white;
-  text-align: center;
-}
-
 @media (min-width: 750px) {
   header {
     text-align: left;
   }
 }
 
-.borrar-curso {
-  background-color: red;
-  border-radius: 50%;
-  padding: 5px 10px;
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-}
-
 ul {
   list-style: none;
-}
-
-#encabezado {
-  margin: 30px 0;
-}
-
-.submenu {
-  position: relative;
-}
-
-.submenu #carrito {
-  display: none;
-}
-
-.submenu:hover #carrito {
-  display: block;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  z-index: 1;
-  background-color: white;
-  padding: 20px;
-  min-height: 400px;
-  min-width: 300px;
-}
-
-.vacio {
-  padding: 10px;
-  background-color: crimson;
-  text-align: center;
-  border-radius: 10px;
-  color: white;
-}
-
-.badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 12px;
-  margin-left: 10px;
-  background-color: red;
-  padding: 5px;
-  border-radius: 50px;
-  color: white;
-  height: 12px;
-  width: 20px;
 }
 
 </style>
